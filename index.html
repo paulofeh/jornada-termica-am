@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Uma análise das mudanças de temperatura ao longo do Rio Amazonas"
+    />
+    <meta property="og:title" content="Rio Amazonas em transformação" />
+    <meta
+      property="og:description"
+      content="Uma análise das mudanças de temperatura ao longo do maior rio do mundo"
+    />
     <title>Rio Amazonas em transformação</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -10,10 +19,16 @@
     <div class="scrolly">
       <div class="sticky">
         <img
-          src="images/grafico.png"
-          alt="Gráfico principal"
+          src="images/grafico1.png"
           id="main-graphic"
+          class="grafico active"
+          alt="Gráfico principal"
+        />
+        <img
+          src="images/grafico1.png"
+          id="next-graphic"
           class="grafico"
+          alt="Próximo gráfico"
         />
       </div>
 
@@ -45,11 +60,14 @@
                   <p>
                     Através da análise de dados do Instituto Nacional de
                     Meteorologia (Inmet), examinamos as variações nas
-                    <span class="destaque">normais climatológicas de temperatura máxima</span> em
-                    estações ao longo do rio, identificando padrões e tendências
-                    que evidenciam os impactos da atividade humana e das
-                    mudanças climáticas na região. Foram comparadas as normais
-                    para os períodos entre <span class="destaque">1961-1990 e 1991-2020</span>.
+                    <span class="destaque"
+                      >normais climatológicas de temperatura máxima</span
+                    >
+                    em estações ao longo do rio, identificando padrões e
+                    tendências que evidenciam os impactos da atividade humana e
+                    das mudanças climáticas na região. Foram comparadas as
+                    normais para os períodos entre
+                    <span class="destaque">1961-1990 e 1991-2020</span>.
                   </p>
                 </div>
                 <div class="column callout-column">
@@ -133,8 +151,14 @@
               efeitos e garantir um futuro sustentável para o município.
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>31,7°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>32,2°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">32,2°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">31,7°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -193,8 +217,14 @@
               regeneração das áreas degradadas.
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>30,9°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>31,3°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">31,3°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">30,9°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -252,8 +282,14 @@
               qualidade ambiental e as condições de vida das comunidades locais.
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>30,3°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>31,2°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">31,2°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">30,3°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -305,8 +341,14 @@
               Demográfico do IBGE (2020).
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>31,2°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>32,3°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">32,3°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">31,2°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -367,8 +409,14 @@
               incluindo a poluição do ar e a degradação dos recursos hídricos.
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>31,4°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>32,3°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">32,3°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">31,4°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -419,8 +467,14 @@
               d'água e a pressão sobre os recursos naturais.
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>31,7°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>32,5°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">32,5°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">31,7°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -479,8 +533,14 @@
               os principais fatores que impulsionam essa degradação ambiental.
             </p>
             <ul>
-              <li>Temperatura máxima 1961-1991: <span>30,8°C</span></li>
-              <li>Temperatura máxima 1991-2020: <span>32,0°C</span></li>
+              <li>
+                Temperatura máxima 1991-2020:
+                <span class="tmax1991">32,0°C</span>
+              </li>
+              <li>
+                Temperatura máxima 1961-1991:
+                <span class="tmax1961">30,8°C</span>
+              </li>
             </ul>
 
             <h4>Variação mês a mês</h4>
@@ -593,7 +653,6 @@
             </p>
           </div>
         </div>
-        <!-- Add more step divs for other locations -->
       </div>
     </div>
     <link

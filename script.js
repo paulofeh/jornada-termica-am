@@ -1,62 +1,93 @@
-// Select the main graphic element
+// Seleciona os elementos das imagens
 const mainGraphic = document.querySelector("#main-graphic");
+const nextGraphic = document.querySelector("#next-graphic");
 
-// Initialize scrollama
+// Array com os nomes dos arquivos de imagem
+const imageFiles = [
+  "grafico1.png",
+  "grafico2.png",
+  "grafico3.png",
+  "grafico4.png",
+  "grafico5.png",
+  "grafico6.png",
+  "grafico7.png",
+  "grafico8.png",
+  "grafico9.png",
+];
+
+// Função para atualizar a imagem com transição suave
+function updateImage(index) {
+  if (index >= 0 && index < imageFiles.length) {
+    const inactiveGraphic = mainGraphic.classList.contains("active")
+      ? nextGraphic
+      : mainGraphic;
+    const activeGraphic = mainGraphic.classList.contains("active")
+      ? mainGraphic
+      : nextGraphic;
+
+    inactiveGraphic.src = `images/${imageFiles[index]}`;
+
+    // Realiza a transição imediatamente
+    requestAnimationFrame(() => {
+      activeGraphic.classList.remove("active");
+      inactiveGraphic.classList.add("active");
+    });
+  }
+}
+
+function updateStep(response) {
+  updateImage(response.index);
+  document.querySelector(".step.active")?.classList.remove("active");
+  response.element.classList.add("active");
+
+  if (isMobile() && response.index > 0) {
+    response.element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+// Função para verificar se é um dispositivo móvel
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+// Inicializa scrollama
 const scroller = scrollama();
 
-// Function to update content based on the current step
-function updateStep(response) {
-  const stepIndex = response.index;
-  const stepElement = response.element;
-
-  // Update main graphic
-  mainGraphic.src = `images/grafico${stepIndex + 1}.png`;
-
-  // Highlight current step
-  document
-    .querySelectorAll(".step")
-    .forEach((step) => step.classList.remove("active"));
-  stepElement.classList.add("active");
-
-  // Load Datawrapper chart if it exists in the current step
-  const datawrapperEmbed = stepElement.querySelector(".datawrapper-embed");
-  if (datawrapperEmbed) {
-    // Replace 'YOUR_CHART_ID' with the actual Datawrapper chart ID
-    datawrapperEmbed.innerHTML =
-      '<iframe src="https://datawrapper.dwcdn.net/YOUR_CHART_ID/" style="width: 100%; height: 400px; border: none;" title="Datawrapper Chart"></iframe>';
-  }
-
-  console.log(`Entered step ${stepIndex + 1}`);
-}
-
-// Function to handle step exit
-function exitStep(response) {
-  if (response.index === 0 && response.direction === "up") {
-    mainGraphic.src = "images/grafico.png";
-  }
-
-  console.log(`Exited step ${response.index + 1}`);
-}
-
-// Set up scrollama
+// Modifique a configuração do scrollama
 scroller
   .setup({
     step: ".step",
-    offset: 0.5,
+    offset: isMobile() ? 1 : 0.5, // Aumente o offset para mobile
     debug: false,
   })
   .onStepEnter(updateStep)
-  .onStepExit(exitStep);
+  .onStepExit((response) => {
+    if (response.index === 0 && response.direction === "up") {
+      updateImage(0);
+      console.log("Voltando ao topo, restaurando a primeira imagem");
+    }
+  });
 
-// Handle window resize
-window.addEventListener("resize", scroller.resize);
+function handleResize() {
+  scroller.resize();
+  scroller.offset(isMobile() ? 1 : 0.5);
+}
+
+window.addEventListener("resize", handleResize);
+
+window.addEventListener("load", () => {
+  // Garante que apenas a primeira imagem seja exibida no carregamento inicial
+  mainGraphic.src = `images/${imageFiles[0]}`;
+  mainGraphic.classList.add("active");
+  nextGraphic.classList.remove("active");
+  console.log("Página carregada, imagem inicial definida");
+});
 
 // Função para inicializar o mapa
 function initializeMap() {
-  // Verifica se o Leaflet está disponível
-  if (typeof L === "undefined") {
+  if (typeof L === "undefined" || !document.getElementById("map")) {
     console.error(
-      "Leaflet não está carregado. Verifique se você incluiu a biblioteca corretamente."
+      "Leaflet não está carregado ou o container do mapa não foi encontrado."
     );
     return;
   }
@@ -72,8 +103,6 @@ function initializeMap() {
 
   // Inicializa o mapa
   const map = L.map("map").setView([-2.5, -59.0], 5.5);
-
-  // Adiciona a camada de tiles
   L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
@@ -142,7 +171,7 @@ function initializeMap() {
       iconAnchor: [20, 40],
     });
 
-    L.marker(location.coords, { icon: icon }).addTo(map).bindPopup(`
+    L.marker(location.coords, { icon }).addTo(map).bindPopup(`
       <b>${location.name}</b><br>
       Aumento de temperatura: ${location.temp}<br>
       Temperatura média 1961-1990: ${location.temp1961_1990.toFixed(1)}°C<br>

@@ -1,13 +1,30 @@
+:root {
+  --primary-color: #25343d;
+  --secondary-color: #a70c26;
+  --background-color: #252525;
+  --text-color: #333;
+  --light-text-color: #ddd;
+  --highlight-color: #9ebbdd;
+}
+
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: "DM Sans", Arial, sans-serif;
   line-height: 1.6;
-  color: #333;
+  color: var(--text-color);
   margin: 0;
   overflow-x: hidden;
-  background-color: #252525;
+  background-color: var(--background-color);
+  scroll-behavior: smooth;
 }
 
-/* Estilos para títulos */
+.initial-scroll-applied {
+  scroll-behavior: auto;
+}
+
 h1,
 h2,
 h3,
@@ -32,17 +49,27 @@ h6 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #252525;
+  background-color: var(--background-color);
+  overflow: hidden;
 }
 
 .grafico {
-  max-width: 100%;
-  max-height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+}
+
+.grafico.active {
+  opacity: 1;
 }
 
 .steps {
-  width: 79%;
+  width: 78%;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -51,7 +78,7 @@ h6 {
   min-height: 100vh;
   padding: 40px;
   margin-bottom: 20px;
-  background-color: #ffffff;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -62,52 +89,44 @@ h6 {
   margin: 0 auto;
 }
 
-h2 {
-  font-size: 2.5em;
+.step h2,
+.step h3,
+.step h4 {
   margin-bottom: 20px;
-  color: #333;
   transition: color 0.3s ease;
+  color: var(--primary-color);
 }
 
-h3 {
-  font-size: 2em;
-  margin-bottom: 15px;
-  color: #4a4a4a;
-  transition: color 0.3s ease;
+.step h2 {
+  font-size: 2.5rem;
 }
 
-p {
-  font-size: 1.1em;
-  line-height: 1.5;
-  margin-bottom: 15px;
-  color: #666;
+.step h3 {
+  font-size: 2rem;
 }
 
-/* Estilo para steps ativos, excluindo o primeiro step e o step de conclusão */
-.step:not(.first-step):not(.conclusion-step).active h2,
-.step:not(.first-step):not(.conclusion-step).active h3 {
-  color: #a70c26;
-}
-
-/* Estilos específicos para o primeiro step */
-.first-step h2,
-.first-step h3 {
-  color: #25343d;
-}
-
-#interactive-map {
-  width: 100%;
-  height: 500px;
-  background-color: #e0e0e0;
-  margin-top: 20px;
-}
-
-.datawrapper-embed {
-  width: 100%;
-  height: 400px;
+.step h4 {
+  font-size: 1.5rem;
   margin-top: 30px;
 }
 
+.step p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.step:not(.first-step):not(.conclusion-step).active h2,
+.step:not(.first-step):not(.conclusion-step).active h3 {
+  color: var(--secondary-color);
+}
+
+.first-step h2,
+.first-step h3 {
+  color: var(--primary-color);
+}
+
+#interactive-map,
 #map {
   width: 100%;
   height: 400px;
@@ -116,8 +135,13 @@ p {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.datawrapper-embed {
+  width: 100%;
+  height: 400px;
+  margin-top: 30px;
+}
+
 .custom-div-icon {
-  background: none;
   border: none;
 }
 
@@ -125,7 +149,7 @@ p {
   width: 40px;
   height: 40px;
   border-radius: 50% 50% 50% 0;
-  background: #ff4136;
+  background: var(--secondary-color);
   position: absolute;
   transform: rotate(-45deg);
   left: 50%;
@@ -137,9 +161,9 @@ p {
 }
 
 .marker-text {
-  font-size: 11px;
+  font-size: 0.7rem;
   font-weight: bold;
-  color: white;
+  color: var(--light-text-color);
   transform: rotate(45deg);
   width: 100%;
   text-align: center;
@@ -147,7 +171,7 @@ p {
 
 .leaflet-popup-content-wrapper {
   background: rgba(255, 255, 255, 0.9);
-  color: #333;
+  color: var(--text-color);
   border-radius: 8px;
   padding: 5px;
 }
@@ -155,16 +179,15 @@ p {
 .leaflet-popup-content {
   margin: 8px 12px;
   line-height: 1.6;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .leaflet-popup-tip-container {
   display: none;
 }
 
-/* Estilos para o primeiro step */
 .first-step {
-  background-color: #25343d;
+  background-color: var(--primary-color);
   padding: 40px 20px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
@@ -175,8 +198,8 @@ p {
 }
 
 .main-title {
-  font-size: 3em;
-  color: #ddd;
+  font-size: 3rem;
+  color: var(--light-text-color);
   margin-bottom: 10px;
   line-height: 1.2;
   letter-spacing: 0;
@@ -184,24 +207,24 @@ p {
 
 .subtitle {
   font-family: "DM Sans", Arial, sans-serif;
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-style: italic;
-  color: #ddd;
+  color: var(--light-text-color);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.4;
 }
 
 .credits {
-  font-size: 0.9em;
-  color: #ddd;
+  font-size: 0.9rem;
+  color: var(--light-text-color);
   margin-bottom: 60px;
 }
 
 .story-intro p {
-  font-size: 1.1em;
+  font-size: 1.1rem;
   line-height: 1.5;
-  color: #ddd;
+  color: var(--light-text-color);
   max-width: 800px;
   margin: 0 auto 40px;
   text-align: justify;
@@ -209,49 +232,31 @@ p {
 
 .destaque {
   font-weight: 500;
-  color: #9ebbdd;
+  color: var(--highlight-color);
 }
+
 .map-section {
-  background-color: #ddd;
+  background-color: var(--light-text-color);
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
 
 .section-title {
-  font-size: 2em;
-  color: #25343d;
+  font-size: 2rem;
+  color: var(--primary-color);
   margin: 0 0 15px 0;
 }
 
 .map-intro {
   margin-bottom: 20px;
-  color: #25343d;
+  color: var(--primary-color);
 }
 
 .interactive-map {
   height: 500px;
   border-radius: 8px;
   overflow: hidden;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .main-title {
-    font-size: 2.8em;
-  }
-
-  .subtitle {
-    font-size: 1em;
-  }
-
-  .story-intro {
-    font-size: 1em;
-  }
-
-  .section-title {
-    font-size: 1.8em;
-  }
 }
 
 .step ul {
@@ -261,33 +266,29 @@ p {
 }
 
 .step ul li {
-  font-size: 0.9em;
-  color: #666;
+  font-size: 0.9rem;
+  color: var(--text-color);
 }
 
-.step ul li span {
+.tmax1961 {
   font-weight: bold;
-  color: #a70c26;
+  color: rgb(250, 142, 79);
 }
 
-.step h4 {
-  font-size: 1.5em;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  color: #4a4a4a;
+.tmax1991 {
+  font-weight: bold;
+  color: var(--secondary-color);
 }
 
-/* Estilos para o step de conclusão */
 .conclusion-step {
-  background-color: #f9f9f9;
-  border-left: 5px solid #25343d;
+  background-color: var(--light-text-color);
+  border-left: 5px solid var(--primary-color);
   padding: 30px;
 }
 
-/* Estilos específicos para o step de conclusão */
 .conclusion-step h2,
 .conclusion-step h3 {
-  color: #25343d;
+  color: var(--primary-color);
 }
 
 .conclusion-section {
@@ -296,22 +297,22 @@ p {
 }
 
 .conclusion-title {
-  color: #25343d;
-  font-size: 2.5em;
+  color: var(--primary-color);
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  border-bottom: 2px solid #25343d;
+  border-bottom: 2px solid var(--primary-color);
   padding-bottom: 10px;
 }
 
 .conclusion-subtitle {
-  color: #25343d;
-  font-size: 1.8em;
+  color: var(--primary-color);
+  font-size: 1.8rem;
   margin-top: 30px;
   margin-bottom: 15px;
 }
 
 .conclusion-intro {
-  font-size: 1.2em;
+  font-size: 1.2rem;
   font-style: italic;
   color: #555;
   margin-bottom: 30px;
@@ -339,14 +340,14 @@ p {
 }
 
 .conclusion-resources a {
-  color: #25343d;
+  color: var(--primary-color);
   text-decoration: none;
-  border-bottom: 1px solid #25343d;
+  border-bottom: 1px solid var(--primary-color);
 }
 
 .conclusion-resources a:hover {
-  color: #a70c26;
-  border-bottom-color: #a70c26;
+  color: var(--secondary-color);
+  border-bottom-color: var(--secondary-color);
 }
 
 .conclusion-footer {
@@ -354,17 +355,15 @@ p {
   color: #666;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--light-text-color);
 }
 
-/* Estilos para o callout */
-
 .callout {
-  border: 1px solid #9ebbdd;
+  border: 1px solid var(--highlight-color);
   border-radius: 8px;
   padding: 16px;
   margin: 0;
-  color: #9ebbdd;
+  color: var(--highlight-color);
   height: 100%;
   box-sizing: border-box;
   display: flex;
@@ -372,7 +371,7 @@ p {
 }
 
 .callout-info {
-  border-left: 4px solid #9ebbdd;
+  border-left: 4px solid var(--highlight-color);
 }
 
 .callout-header {
@@ -386,7 +385,7 @@ p {
 }
 
 .callout-title {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -394,22 +393,21 @@ p {
 p.callout-text {
   margin-bottom: 8px;
   line-height: 1.3;
-  font-size: 14px;
+  font-size: 0.875rem;
   flex-grow: 1;
 }
 
 .callout-link {
-  color: #9ebbdd;
+  color: var(--highlight-color);
   text-decoration: none;
-  border-bottom: 1px solid #9ebbdd;
+  border-bottom: 1px solid var(--highlight-color);
 }
 
 .callout-link:hover {
   text-decoration: none;
-  border-bottom: 2px solid #9ebbdd;
+  border-bottom: 2px solid var(--highlight-color);
 }
 
-/* Layout de duas colunas */
 .two-column-container {
   display: flex;
   gap: 40px;
@@ -424,9 +422,90 @@ p.callout-text {
   margin: 0;
 }
 
-/* Ajustes para responsividade */
 @media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .scrolly {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+  }
+
+  .grafico {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .steps {
+    width: 100%;
+    padding: 0;
+    margin-top: 70vh;
+  }
+
+  .step {
+    min-height: calc(100vh - 40px);
+    margin: 20px 10px 50vh 10px;
+    z-index: 2;
+    position: relative;
+    padding: 20px;
+  }
+
+  .first-step {
+    margin-top: 20px;
+  }
+
+  .conclusion-step {
+    margin-bottom: 20px;
+  }
+
+  .step h2 {
+    font-size: 1.8rem;
+  }
+
+  .step h3 {
+    font-size: 1.5rem;
+  }
+
+  .step p {
+    font-size: 1rem;
+  }
+
+  #map {
+    height: 300px;
+  }
+
   .two-column-container {
     flex-direction: column;
+  }
+
+  .column {
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .scrolly {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .sticky {
+    width: 22%;
+    height: 100vh;
+  }
+
+  .steps {
+    width: 78%;
+    padding: 20px;
   }
 }
