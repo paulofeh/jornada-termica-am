@@ -468,6 +468,10 @@ p.callout-text {
     margin-bottom: 20px;
   }
 
+  .main-title {
+    font-size: 2rem;
+  }
+
   .step h2 {
     font-size: 1.8rem;
   }
